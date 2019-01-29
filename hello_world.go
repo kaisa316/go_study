@@ -1,5 +1,5 @@
 /*
-* go study
+* go study,基本类型的学习
 * 通用原则：
 * 1. 无论是变量，方法，常量都采用驼峰式写法，而不是_下划线方式分割
  */
@@ -10,6 +10,7 @@ import (
 	//"os"
 	//"runtime"
 	"strings"
+	"time"
 )
 
 var (
@@ -32,7 +33,11 @@ func main() {
 	//typeConvert()
 	//studyConst()
 	//charStudy()
-	stringStudy()
+	//dateStudy()
+	//pointerStudy()
+	//ifStudy()
+	//forStudy()
+	switchStudy()
 }
 
 /*
@@ -109,11 +114,37 @@ func charStudy() {
 * 字符串类型学习
  */
 func stringStudy() {
-	sfirst := "第一种形式,解释型"
-	ssecond := `第二种方式
+	//sfirst := "第一种形式,解释型"
+	/*ssecond := `第二种方式
 	raw string`
 	sthird := "abc"
 	fmt.Println(sfirst)
 	fmt.Println(ssecond)
-	fmt.Println(sthird[1])
+	fmt.Println(sthird[1])*/
+	ss := "first blood"
+	slice := strings.Split(ss, " ")
+	fmt.Println(strings.Join(slice, "--"))
+}
+
+/**
+* 时间、日期学习
+ */
+func dateStudy() {
+	fmt.Println(time.Now())
+	fmt.Println(time.Now().Format("20060102"))
+}
+
+/**
+* 指针学习
+* 内存就像快递柜，每个柜子当中放有快递包裹（value），和他的坐标[3,2](内存地址)
+ */
+func pointerStudy() {
+	a := 5
+	s := "zhangsan"
+	b := &a
+	ptr := &s
+	var m *string
+	m = &s
+	fmt.Println(b, ptr, m)
+
 }

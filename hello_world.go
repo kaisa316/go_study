@@ -37,7 +37,11 @@ func main() {
 	//pointerStudy()
 	//ifStudy()
 	//forStudy()
-	switchStudy()
+	//switchStudy()
+	//fmt.Println(funcStudy("zhangsan", 23))
+	//paramFuncMain(99, paramFuncStudy)
+	//arrayStudy()
+	sliceStudy()
 }
 
 /*

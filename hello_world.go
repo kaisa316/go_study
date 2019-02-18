@@ -41,7 +41,9 @@ func main() {
 	//fmt.Println(funcStudy("zhangsan", 23))
 	//paramFuncMain(99, paramFuncStudy)
 	//arrayStudy()
-	sliceStudy()
+	//sliceStudy()
+	//mapStudy()
+	structStudy()
 }
 
 /*

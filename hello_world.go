@@ -43,7 +43,8 @@ func main() {
 	//arrayStudy()
 	//sliceStudy()
 	//mapStudy()
-	structStudy()
+	//structStudy()
+	interfaceStudy()
 }
 
 /*

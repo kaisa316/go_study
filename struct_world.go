@@ -17,7 +17,8 @@ type yang struct {
 type intAlias int
 
 type twoYang struct {
-	yang
+	yang //匿名字段相当于继承
+	name string
 	city string
 }
 
@@ -104,6 +105,10 @@ func (*twoYang) twoyangInfo() {
 	fmt.Println("i am twoyang info")
 }
 
+func (*twoYang) echoInfo() {
+	fmt.Println("two yang echo info method")
+}
+
 /**
 * 匿名类型 测试
  */
@@ -112,5 +117,5 @@ func extendTest() {
 	tt.name = "beijing"
 	tt.age = 55
 	tt.echoInfo()
-	fmt.Println(tt)
+	tt.twoyangInfo()
 }

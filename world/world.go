@@ -14,3 +14,8 @@ func NewWorld() *world {
 	w.Size = 960
 	return w
 }
+
+//方法
+func (world) saveWorld(name string) (code int) {
+	return 1
+}

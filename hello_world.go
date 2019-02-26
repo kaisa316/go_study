@@ -44,7 +44,8 @@ func main() {
 	//sliceStudy()
 	//mapStudy()
 	//structStudy()
-	interfaceStudy()
+	//interfaceStudy()
+	goroutine_study()
 }
 
 /*

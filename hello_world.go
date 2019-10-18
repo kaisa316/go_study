@@ -26,7 +26,7 @@ const (
 )
 
 func main() {
-	//studyVar()
+	studyVar()
 	//name, _ := GetName("zhangsan")
 	//fmt.Println(name)
 	//operator()
@@ -45,7 +45,7 @@ func main() {
 	//mapStudy()
 	//structStudy()
 	//interfaceStudy()
-	goroutine_study()
+	//goroutine_study()
 }
 
 /*
@@ -55,7 +55,8 @@ func main() {
 * 第二种，:= 形式
  */
 func studyVar() {
-	//局部变量，定义了会报错，全局变量定义了不用，也不会报错
+	//局部变量，定义了而不用会报错
+	//全局变量定义了不用，也不会报错
 	//var name string            //decalre
 	//var address string = "内蒙古" //declare && init value
 	var hometown = "赤峰市" //omit type
@@ -71,6 +72,9 @@ func studyVar() {
 	//fmt.Println(s)
 	//cc := 99
 	//fmt.Println(cc)
+	var name string = "zhangsan"
+	city := "chifeng"
+	fmt.Println(name, city)
 }
 
 /**

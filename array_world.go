@@ -133,3 +133,33 @@ func sortArray() {
 	sort.Strings(str_arr)
 	fmt.Println(str_arr)
 }
+
+func test() {
+	/*arr := map[string]int{"name": 2, "city": 3, "sex": 5}
+	fmt.Println(arr)*/
+	//第一种方式
+	var citys map[string]string
+	citys = make(map[string]string)
+	citys["name"] = "zhangsan"
+	citys["sex"] = "man"
+	fmt.Println(citys)
+	//第二种方式
+	person := map[string]string{}
+	person["sex"] = "women"
+	person["eye"] = "double"
+
+	arr := [3]int{}
+	arr[0] = 1
+	arr[1] = 2
+
+	sliceA := arr[:]
+	sliceA[0] = 100
+	sliceA[1] = 8
+	sliceA[2] = 5
+	fmt.Println(arr, sliceA)
+
+}
+
+func main() {
+	test()
+}

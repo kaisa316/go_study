@@ -74,6 +74,7 @@ func studyVar() {
 	//fmt.Println(cc)
 	var name string = "zhangsan"
 	city := "chifeng"
+	city = "tongliao"
 	fmt.Println(name, city)
 }
 

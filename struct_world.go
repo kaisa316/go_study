@@ -119,3 +119,49 @@ func extendTest() {
 	tt.echoInfo()
 	tt.twoyangInfo()
 }
+
+/**
+* struct 学习
+* 定义新的类型,base type
+ */
+type animal struct {
+	eye   string //眼睛
+	mouse string //嘴
+	leg   string //腿
+}
+
+/**
+* 具体类型
+ */
+type dog struct {
+	run    int    //狗刨
+	eye    string //覆盖animal中的eye
+	animal        //匿名字段，用于继承animal
+}
+
+type pig struct {
+	hair   string
+	weight string
+	eye    string
+	animal
+}
+
+type cat struct {
+	mijie string
+	animal
+}
+
+func main() {
+	//第一种方式
+	c := cat{}
+	c.eye = "xxxx"
+	fmt.Println(c)
+	//第二种使用
+	var d dog
+	d.eye = "dog eye"
+	fmt.Println(d)
+	//第三种使用
+	dptr := new(dog)
+	dptr.eye = "pointer"
+	fmt.Println(dptr)
+}

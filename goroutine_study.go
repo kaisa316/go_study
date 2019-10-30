@@ -10,11 +10,8 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"time"
 )
-
-func goroutine_study() {
-	channel_study()
-}
 
 /**
 * 并发执行一个函数
@@ -42,6 +39,32 @@ func channel_study() {
 	}()
 
 	msg := <-message //current go routine,从这个goroutine中接受消息
-	fmt.Println(msg)
+	fmt.Println(msg) //goroutine num_2收到消息
+
+}
+
+//////10月28日，第二次学习///////
+func hi(s string, ch chan string) {
+	ch <- s
+	fmt.Println(s)
+}
+
+func worker(done chan bool) {
+	fmt.Println("working....")
+	time.Sleep(time.Second)
+	fmt.Println("done")
+	done <- true
+}
+
+func main() {
+	/*ch := make(chan string)
+	for i := 0; i < 3; i++ {
+		go hi("go world", ch)
+	}
+	<-ch
+	fmt.Println("done ")*/
+	done := make(chan bool)
+	go worker(done)
+	<-done
 
 }

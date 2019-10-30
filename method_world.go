@@ -36,31 +36,31 @@ func (r Rectangle) getVolume() (v int) {
 }
 
 /**
-* 接收者是指针pointer
+* 接收者是指针pointer ,传递的是对象的内存地址copy,接收者自身可以被改变
  */
 func (r *Rectangle) setLong(v int) {
 	r.long = v
+
 }
 
+/**
+* 接收者是value ,传递的是对象的copy,只会改变copy自身
+ */
 func (r Rectangle) setWidth(w int) {
 	r.width = w
-	fmt.Println(r.width)
 }
 
 func main() {
-	//rec := Rectangle{height: 5, width: 6}
-	var rec Rectangle
-	rec.height = 5
-	rec.width = 5
-	//areaRec := rec.area()
-	//fmt.Println(areaRec)
-
 	rec2 := Rectangle{}
 	rec2.height = 5
-	rec2.width = 8
+	rec2.width = 5
 
-	rec2.setLong(4)
-	rec2.setWidth(2)
-	fmt.Println(rec2.width)
-	fmt.Println(rec2.long)
+	rec2.setLong(14)
+	fmt.Println(rec2.long) //output 14，指针改变了原始值
+
+	rec2.setWidth(10)
+	fmt.Println(rec2.width) //output 5,value 传值只会改变副本
+
+	r := rec2.area()
+	fmt.Println(r)
 }

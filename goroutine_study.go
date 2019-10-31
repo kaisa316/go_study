@@ -51,9 +51,23 @@ func hi(s string, ch chan string) {
 
 func worker(done chan bool) {
 	fmt.Println("working....")
-	time.Sleep(time.Second)
+	time.Sleep(2 * time.Second)
 	fmt.Println("done")
 	done <- true
+}
+
+func worker2(done chan bool) {
+	fmt.Println("2 working")
+	time.Sleep(2 * time.Second)
+	fmt.Println("2 done")
+	done <- true
+}
+
+func pln(s string, ch chan bool) {
+	fmt.Println(s)
+	time.Sleep(time.Second)
+	fmt.Println("done")
+	ch <- true
 }
 
 func main() {
@@ -63,8 +77,13 @@ func main() {
 	}
 	<-ch
 	fmt.Println("done ")*/
-	done := make(chan bool)
+	/*done := make(chan bool)
 	go worker(done)
-	<-done
-
+	go worker2(done)
+	<-done*/
+	ch := make(chan bool)
+	go pln("hello", ch)
+	go pln("world", ch)
+	go pln("nihao", ch)
+	<-ch
 }

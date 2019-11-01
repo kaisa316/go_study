@@ -13,6 +13,12 @@ import (
 	"time"
 )
 
+var start time.Time
+
+func init() {
+	start = time.Now()
+}
+
 /**
 * 并发执行一个函数
  */
@@ -56,34 +62,37 @@ func worker(done chan bool) {
 	done <- true
 }
 
-func worker2(done chan bool) {
+func worker2() {
 	fmt.Println("2 working")
-	time.Sleep(2 * time.Second)
+	//time.Sleep(2 * time.Second)
 	fmt.Println("2 done")
-	done <- true
 }
 
-func pln(s string, ch chan bool) {
-	fmt.Println(s)
-	time.Sleep(time.Second)
-	fmt.Println("done")
-	ch <- true
+func printHello() {
+	time.Sleep(15 * time.Millisecond)
+	fmt.Println("hello world")
+}
+
+func getChars(s string) {
+	for _, c := range s {
+		fmt.Printf("%c at time %v \n ", c, time.Since(start))
+		time.Sleep(10 * time.Millisecond)
+	}
+}
+
+func getDigits(s []int) {
+	for _, d := range s {
+		fmt.Printf("%d at time %v \n ", d, time.Since(start))
+		time.Sleep(30 * time.Millisecond)
+	}
 }
 
 func main() {
-	/*ch := make(chan string)
-	for i := 0; i < 3; i++ {
-		go hi("go world", ch)
-	}
-	<-ch
-	fmt.Println("done ")*/
-	/*done := make(chan bool)
-	go worker(done)
-	go worker2(done)
-	<-done*/
-	ch := make(chan bool)
-	go pln("hello", ch)
-	go pln("world", ch)
-	go pln("nihao", ch)
-	<-ch
+	fmt.Println("main execute start")
+
+	go getChars("hello")
+	go getDigits([]int{1, 2, 3, 4, 5})
+
+	time.Sleep(200 * time.Millisecond)
+	fmt.Println("\nmain end")
 }

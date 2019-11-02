@@ -53,7 +53,7 @@ func callSayhi() {
 func buffersize(c chan int) {
 	for i := 0; i < 10; i++ {
 		//fmt.Println("the length is  ", len(c))
-		fmt.Println("xxx")
+		fmt.Println("buffer size func ,current i :", i)
 		num := <-c
 		fmt.Println("input is ", num)
 	}
@@ -61,7 +61,7 @@ func buffersize(c chan int) {
 
 func callBuffersize() {
 	c := make(chan int, 3)
-	go squares(c)
+	go buffersize(c)
 	c <- 1
 	c <- 2
 	c <- 3
@@ -70,8 +70,11 @@ func callBuffersize() {
 }
 
 func main() {
+	//main 函数本身就是一个main goroutine,而且当main goroutine执行完毕后，整个程序就会退出，不管有没有其他要执行的goroutine,如果没有阻塞block，那么goroutine会一直执行下去，即使有其他ready状态的goroutines也不会被轮转，他们会被活活饿死。
+	//start main goroutine
 	fmt.Println("main start")
 	//callSayhi()
+	callBuffersize()
 	fmt.Println("main end")
 
 }

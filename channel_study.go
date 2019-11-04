@@ -99,6 +99,38 @@ func callSleepFunc() {
 	time.Sleep(time.Millisecond)
 }
 
+func sayHello(c chan string) {
+	fmt.Println("say hello begin")
+	<-c
+	fmt.Println("say hello end")
+	/*
+		for i := 0; i < 10000; i++ {
+			fmt.Println(i)
+		}
+	*/
+}
+
+func sayWorld(c chan string) {
+	fmt.Println("say world begin")
+	<-c
+	fmt.Println("say world end")
+}
+
+func callSay() {
+	fmt.Println("main goroutine start")
+	c1 := make(chan string)
+	c2 := make(chan string)
+	go sayHello(c1)
+	go sayWorld(c2)
+	fmt.Println("send hello")
+	c1 <- "hello"
+	fmt.Println("send world")
+	c2 <- "world"
+
+	//time.Sleep(1 * time.Millisecond)
+	fmt.Println("main end")
+}
+
 func main() {
 	//main 函数本身就是一个main goroutine,而且当main goroutine执行完毕后，整个程序就会退出，不管有没有其他要执行的goroutine,如果没有阻塞block，那么goroutine会一直执行下去，即使有其他ready状态的goroutines也不会被轮转，他们会被活活饿死。
 	//start main goroutine
@@ -106,7 +138,8 @@ func main() {
 	//callSayhi()
 	//callBuffersize()
 	//callSleepFunc()
-	callGreet()
+	//callGreet()
+	callSay()
 	fmt.Println("main end")
 
 }

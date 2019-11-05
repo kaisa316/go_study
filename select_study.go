@@ -31,7 +31,7 @@ func blank() {
 	fmt.Println("exec blank")
 }
 
-func main() {
+func callMe() {
 	fmt.Println("main goroutine start")
 	c1 := make(chan string)
 	c2 := make(chan string)
@@ -59,4 +59,8 @@ func main() {
 	}
 	//time.Sleep(1 * time.Millisecond)
 	fmt.Println("main end")
+
+}
+
+func main() {
 }

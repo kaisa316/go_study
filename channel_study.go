@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"time"
 )
 
@@ -131,15 +132,67 @@ func callSay() {
 	fmt.Println("main end")
 }
 
+func sender(c chan int) {
+	c <- 1 //len 1,cap 3
+	c <- 2 //len 2,cap 3
+	c <- 3 //len 3,cap 3
+	c <- 4 //goroutine block here
+	close(c)
+}
+
+func callSender() {
+	c := make(chan int, 3)
+	go sender(c)
+	for val := range c { //read values from c,block here
+		fmt.Println("val is ", val)
+	}
+}
+
+func senderUnclose(c chan int) {
+	for i := 0; i < 4; i++ {
+		fmt.Println(<-c)
+	}
+}
+
+func callSenderUnclose() {
+	c := make(chan int, 3)
+	go senderUnclose(c)
+	fmt.Println("active goroutines ", runtime.NumGoroutine())
+	c <- 1
+	c <- 2
+	c <- 3
+	c <- 4
+	fmt.Println("active goroutines ", runtime.NumGoroutine())
+	go senderUnclose(c)
+	fmt.Println("active goroutines ", runtime.NumGoroutine())
+	c <- 5
+	c <- 6
+	c <- 7
+	c <- 8 //block here
+	fmt.Println("active goroutines ", runtime.NumGoroutine())
+	//output:
+	//main start
+	//active 2
+	//1,2,3,4
+	//active 1
+	//active 2
+	//5,6,7,8
+	//active 1
+}
+
 func main() {
 	//main 函数本身就是一个main goroutine,而且当main goroutine执行完毕后，整个程序就会退出，不管有没有其他要执行的goroutine,如果没有阻塞block，那么goroutine会一直执行下去，即使有其他ready状态的goroutines也不会被轮转，他们会被活活饿死。
-	//start main goroutine
+	//start main goroutine) {
+	//
+	//}
 	fmt.Println("main start")
 	//callSayhi()
 	//callBuffersize()
 	//callSleepFunc()
 	//callGreet()
-	callSay()
+	//callSay()
+	//callSender()
+	callSenderUnclose()
 	fmt.Println("main end")
 
 }

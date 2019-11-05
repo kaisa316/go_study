@@ -2,8 +2,14 @@ package main
 
 import (
 	"fmt"
-	//"time"
+	"time"
 )
+
+var start time.Time
+
+func init() {
+	start = time.Now()
+}
 
 func sayHello(c chan string) {
 	<-c
@@ -30,9 +36,7 @@ func sayYou2(c chan string) {
 func blank() {
 	fmt.Println("exec blank")
 }
-
 func callMe() {
-	fmt.Println("main goroutine start")
 	c1 := make(chan string)
 	c2 := make(chan string)
 	c3 := make(chan string)
@@ -58,9 +62,60 @@ func callMe() {
 		//fmt.Println("case:default")
 	}
 	//time.Sleep(1 * time.Millisecond)
-	fmt.Println("main end")
+
+}
+
+/////////rungo series ////////////
+func service1(c chan string) {
+	fmt.Println("service1 start", time.Since(start))
+	//time.Sleep(3 * time.Second)
+	c <- "from service1 "
+}
+func service2(c chan string) {
+	fmt.Println("service2 start", time.Since(start))
+	//time.Sleep(5 * time.Second)
+	c <- "from service2 "
+}
+
+//阻塞式执行
+func callService() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+
+	go service1(c1)
+	go service2(c2)
+
+	select {
+	case res1 := <-c1:
+		fmt.Println("response from service1 ", res1, time.Since(start))
+	case res2 := <-c2:
+		fmt.Println("response from service2 ", res2, time.Since(start))
+	}
+
+}
+
+//非阻塞式执行
+func callServiceUnblock() {
+	c1 := make(chan string, 2) //buffer size 2
+	c2 := make(chan string, 2) //buffer size 2
+
+	c1 <- "value1"
+	c1 <- "value2"
+	c2 <- "value1"
+	c2 <- "value2"
+
+	select {
+	case res1 := <-c1:
+		fmt.Println("response from service1 ", res1, time.Since(start))
+	case res2 := <-c2:
+		fmt.Println("response from service2 ", res2, time.Since(start))
+	}
 
 }
 
 func main() {
+	fmt.Println("main goroutine start")
+	//callService()
+	callServiceUnblock()
+	fmt.Println("main end")
 }

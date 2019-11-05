@@ -170,14 +170,35 @@ func callSenderUnclose() {
 	c <- 7
 	c <- 8 //block here
 	fmt.Println("active goroutines ", runtime.NumGoroutine())
-	//output:
-	//main start
-	//active 2
-	//1,2,3,4
-	//active 1
-	//active 2
-	//5,6,7,8
-	//active 1
+
+}
+
+//平方计算
+func square(c chan int) {
+	fmt.Println("square start")
+	num := <-c
+	fmt.Println("square end", num)
+	//c <- num * num
+}
+
+//立方计算
+func cube(c chan int) {
+	fmt.Println("cube start")
+	num := <-c
+	fmt.Println("cube end", num)
+	//c <- num * num * num
+}
+
+func callCaculate() {
+	c1 := make(chan int)
+	c2 := make(chan int)
+	go square(c1)
+	go cube(c2)
+	fmt.Println("send to c1")
+	c1 <- 3
+	fmt.Println("send to c2")
+	c2 <- 4
+	fmt.Println("active goroutines:", runtime.NumGoroutine())
 }
 
 func main() {
@@ -192,7 +213,8 @@ func main() {
 	//callGreet()
 	//callSay()
 	//callSender()
-	callSenderUnclose()
+	//callSenderUnclose()
+	callCaculate()
 	fmt.Println("main end")
 
 }

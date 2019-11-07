@@ -68,12 +68,19 @@ func callMe() {
 /////////rungo series ////////////
 func service1(c chan string) {
 	fmt.Println("service1 start", time.Since(start))
-	//time.Sleep(3 * time.Second)
+	for i := 0; i < 100; i++ {
+		fmt.Println("i=", i)
+	}
+	time.Sleep(3 * time.Second)
 	c <- "from service1 "
 }
+
 func service2(c chan string) {
 	fmt.Println("service2 start", time.Since(start))
-	//time.Sleep(5 * time.Second)
+	for i := 0; i < 100; i++ {
+		fmt.Println("K=", i)
+	}
+	time.Sleep(5 * time.Second)
 	c <- "from service2 "
 }
 
@@ -90,6 +97,8 @@ func callService() {
 		fmt.Println("response from service1 ", res1, time.Since(start))
 	case res2 := <-c2:
 		fmt.Println("response from service2 ", res2, time.Since(start))
+	case <-time.After(2 * time.Second): //超时2秒执行这个case
+		fmt.Println("timeout ,no response receive")
 	}
 
 }
@@ -115,7 +124,7 @@ func callServiceUnblock() {
 
 func main() {
 	fmt.Println("main goroutine start")
-	//callService()
-	callServiceUnblock()
+	callService()
+	//callServiceUnblock()
 	fmt.Println("main end")
 }

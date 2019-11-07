@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"sync"
 	"time"
 )
 
@@ -201,6 +202,22 @@ func callCaculate() {
 	fmt.Println("active goroutines:", runtime.NumGoroutine())
 }
 
+func waitLearn(wg *sync.WaitGroup, input int) {
+	fmt.Println("execute waitLearn = ", input)
+	wg.Done()
+}
+
+//select 是cases中的任意一个通了后就unblock
+//waitgroup见名知意，是一组。必须所有case都准备好之后才能unblock
+func callWaitLearn() {
+	var wg sync.WaitGroup //create waitgroup (empty struct)
+	for i := 0; i < 3; i++ {
+		wg.Add(1) //increment counter
+		go waitLearn(&wg, i)
+	}
+	wg.Wait() //block here
+}
+
 func main() {
 	//main 函数本身就是一个main goroutine,而且当main goroutine执行完毕后，整个程序就会退出，不管有没有其他要执行的goroutine,如果没有阻塞block，那么goroutine会一直执行下去，即使有其他ready状态的goroutines也不会被轮转，他们会被活活饿死。
 	//start main goroutine) {
@@ -214,7 +231,8 @@ func main() {
 	//callSay()
 	//callSender()
 	//callSenderUnclose()
-	callCaculate()
+	//callCaculate()
+	callWaitLearn()
 	fmt.Println("main end")
 
 }

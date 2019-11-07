@@ -97,7 +97,7 @@ func callService() {
 		fmt.Println("response from service1 ", res1, time.Since(start))
 	case res2 := <-c2:
 		fmt.Println("response from service2 ", res2, time.Since(start))
-	case <-time.After(2 * time.Second): //超时2秒执行这个case
+	case <-time.After(2 * time.Second): //超时2秒执行这个
 		fmt.Println("timeout ,no response receive")
 	}
 

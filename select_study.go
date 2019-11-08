@@ -71,8 +71,8 @@ func service1(c chan string) {
 	for i := 0; i < 100; i++ {
 		fmt.Println("i=", i)
 	}
-	time.Sleep(3 * time.Second)
-	c <- "from service1 "
+	//time.Sleep(3 * time.Second)
+	c <- "来自service1 发送的信息  "
 }
 
 func service2(c chan string) {
@@ -80,8 +80,8 @@ func service2(c chan string) {
 	for i := 0; i < 100; i++ {
 		fmt.Println("K=", i)
 	}
-	time.Sleep(5 * time.Second)
-	c <- "from service2 "
+	//time.Sleep(5 * time.Second)
+	c <- "来自from service2发送的信息 "
 }
 
 //阻塞式执行
@@ -122,9 +122,22 @@ func callServiceUnblock() {
 
 }
 
+func callNormal() {
+	c1 := make(chan string)
+	c2 := make(chan string)
+	go service1(c1)
+	go service2(c2)
+	msg1 := <-c1
+	fmt.Println(msg1)
+	msg2 := <-c2
+	fmt.Println(msg2)
+
+}
+
 func main() {
 	fmt.Println("main goroutine start")
-	callService()
+	//callService()
 	//callServiceUnblock()
+	callNormal()
 	fmt.Println("main end")
 }

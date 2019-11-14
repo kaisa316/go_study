@@ -6,11 +6,10 @@ package main
 
 import (
 	"fmt"
-	"go_study_pkg/greet"
-	"go_study_pkg/greet/de"
+	"github.com/kaisa316/nummanip/calc"
 )
 
 func main() {
-	fmt.Println(greet.Morning)
-	fmt.Println(de.DeName)
+	result := calc.Sum(1, 2, 3)
+	fmt.Println(result)
 }

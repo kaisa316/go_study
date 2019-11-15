@@ -2,3 +2,5 @@ github.com/kaisa316/nummanip v1.0.0 h1:hKiNWvr+fUUYisJ+eALEqtQ+BFq9P6e7V1vT/87En
 github.com/kaisa316/nummanip v1.0.0/go.mod h1:Y+PD6OgCIybhYwej30/tr+npznnm3GZv1KelFrrZyXk=
 github.com/kaisa316/nummanip/v2 v2.0.1 h1:6YL0FGqAA/AcEiZge+hZPaR7lYDOsDJDJ4FG0uCAwKo=
 github.com/kaisa316/nummanip/v2 v2.0.1/go.mod h1:NOGure3cI3kqcwZNAeUqZFK3DOqMI/lAIc/uWOFG7tU=
+github.com/kaisa316/nummanip/v3 v3.0.0 h1:8FNZWy2wy8LUekKIMWwhdrPvH8mG5N6QzkFY5meqtrI=
+github.com/kaisa316/nummanip/v3 v3.0.0/go.mod h1:AOhDQ/NXAbxaD6uDj3aQcg4F0rquRUgN1F8KbFpWO0I=

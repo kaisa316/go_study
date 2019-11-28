@@ -6,15 +6,13 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-
-
 var errMsg map[string]string
 
 func init() {
-	errMsg = map[string]string{
-		"Username": "非法的用户名",
-		"Password": "无效的密码",
-	}
+	errMsg = make(map[string]string)
+	errMsg["Username"] = "非法的用户名"
+	errMsg["Password"] = "无效的密码"
+	errMsg["Age"] = "非法的年龄"
 }
 
 type User struct {
@@ -22,6 +20,8 @@ type User struct {
 	Password string `validate:"required"`
 	Age      uint8  `validate:"gte=0,lte=130"`
 }
+
+//如何返回error 类型错误
 
 func ValidateUser() {
 	u := &User{
@@ -31,14 +31,11 @@ func ValidateUser() {
 	}
 	validate := validator.New()
 	err := validate.Struct(u)
-	fmt.Println(err)
+	// fmt.Println(err)
 	if err != nil {
 		validationErrors := err.(validator.ValidationErrors)
-
 		for _, flErr := range validationErrors {
-			if flErr.Field() == "UserName" {
-
-			}
+			fmt.Println(errMsg[flErr.Field()])
 			/*
 				fmt.Println(flErr)
 				fmt.Println(flErr.Namespace())

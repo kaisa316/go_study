@@ -36,6 +36,7 @@ func sliceStudy() {
 	/*sub_arr := arr[:]
 	cap_num := cap(sub_arr)
 	len_num := len(sub_arr)
+	append(sub_arr,5)
 	fmt.Println(cap_num, len_num)
 	sum_num := sum(sub_arr)
 	fmt.Println(sum_num)*/

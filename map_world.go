@@ -9,7 +9,7 @@ import (
 
 func main() {
 	//mapSlice()
-	mapSlice3()
+	mapSlice4()
 }
 
 func practice() {
@@ -88,10 +88,8 @@ func mapSlice3() {
 	//["zhangsan"]["yuwen"] = ["1","10"]
 	//["zhangsan"]["math"] = ["100","1000"]
 	//map map slice
-	//这种形式，第二个map也不要实例化才行,否则报错
 	//姓名，课程，分数
-	var result map[string]map[string][]string
-	result = make(map[string]map[string][]string) //map 第一种初始化形式
+	result := make(map[string]map[string][]string) //map 第一种初始化形式
 	// kecheng := map[string][]string{}              //第二种map 初始化形式
 	// score := []string{}
 	for _, val := range dbData {
@@ -100,16 +98,46 @@ func mapSlice3() {
 		score := result[name][kechengVal]
 		score = append(score, val["score"])
 		kecheng := result[name]
+		//内部的map初始化，否则会报错
 		if kecheng == nil {
 			kecheng = make(map[string][]string)
 		}
-		// result[name][kechengVal] = append(result[name][kechengVal], val["score"])
-		//这样会报错,内部map没有初始化
+		//一层一层解决，这个思路是对的
 		kecheng[kechengVal] = score
 		result[name] = kecheng
 	}
 
 	fmt.Println(result)
-	//
 
+}
+
+func mapSlice4() {
+	dbData := []map[string]string{
+		{"score": "1", "name": "zhangsan", "kecheng": "yuwen"},
+		{"score": "10", "name": "zhangsan", "kecheng": "yuwen"},
+		{"score": "100", "name": "zhangsan", "kecheng": "math"},
+		{"score": "1000", "name": "zhangsan", "kecheng": "math"},
+		{"score": "2", "name": "lisi", "kecheng": "yuwen"},
+		{"score": "22", "name": "lisi", "kecheng": "yuwen"},
+		{"score": "222", "name": "lisi", "kecheng": "math"},
+		{"score": "2222", "name": "lisi", "kecheng": "math"},
+	}
+	//["zhangsan"]["yuwen"] = ["1","10"]
+	//["zhangsan"]["math"] = ["100","1000"]
+	//map map slice
+	//姓名，课程，分数
+	result := map[string]map[string][]string{}
+	for _, val := range dbData {
+		name := val["name"]
+		kechengval := val["kecheng"]
+		score := result[name][kechengval]
+		score = append(score, val["score"]) //解决掉slice
+		kecheng := result[name]
+		if kecheng == nil {
+			kecheng = make(map[string][]string)
+		}
+		kecheng[kechengval] = score //解决掉课程这一程问题
+		result[name] = kecheng      //解决掉人，这一次层
+	}
+	fmt.Println(result)
 }

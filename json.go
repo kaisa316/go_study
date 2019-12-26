@@ -2,11 +2,11 @@ package main
 
 import (
 	"bytes"
-	"encoding/gob"
 	"encoding/json"
 	"fmt"
 
 	jsoniter "github.com/json-iterator/go"
+	"github.com/techleeone/gophp/serialize"
 )
 
 func main() {
@@ -112,15 +112,14 @@ func gobTest() {
 		"weight": 99.45,
 	}
 
-	b := new(bytes.Buffer)
-	encode := gob.NewEncoder(b)
-	encode.Encode(s)
-	encodeStr := string(b.Bytes())
-	fmt.Println(encodeStr)
+	//encode
+	bytes, _ := serialize.Marshal(s)
+	ss := string(bytes)
+	fmt.Printf("%v,%T", ss, ss)
 
-	var decodedMap map[string]interface{}
-	d := gob.NewDecoder(b)
-	// Decoding the serialized data
-	d.Decode(&decodedMap)
-	fmt.Printf("%v,%T", decodedMap, decodedMap["age"])
+	//decode
+	decode, _ := serialize.UnMarshal([]byte(ss))
+	decodeMap := decode.(map[string]interface{})
+	fmt.Printf("%v,%T", decodeMap, decodeMap["age"])
+
 }

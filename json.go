@@ -116,10 +116,10 @@ func gobTest() {
 	bytes, _ := serialize.Marshal(s)
 	ss := string(bytes)
 	fmt.Printf("%v,%T", ss, ss)
-
+	fmt.Println("===================")
 	//decode
 	decode, _ := serialize.UnMarshal([]byte(ss))
 	decodeMap := decode.(map[string]interface{})
-	fmt.Printf("%v,%T", decodeMap, decodeMap["age"])
+	fmt.Printf("%v,age type :%T", decodeMap, decodeMap["age"])
 
 }

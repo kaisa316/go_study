@@ -10,10 +10,10 @@ import (
 )
 
 func main() {
-	// guanfangInterface()
+	guanfangInterface()
 	// jsonIteratorInterface()
 	// seriInterface()
-	gobTest()
+	serieTest()
 }
 
 func guanfang() {
@@ -35,19 +35,19 @@ func guanfang() {
 
 func guanfangInterface() {
 	s := map[string]interface{}{
-		"name": "zhangsan",
-		"age":  23,
+		"name":   "zhangsan",
+		"age":    23,
+		"weight": 99.45,
 	}
 
 	result, _ := json.Marshal(s)
 	ss := string(result)
-	fmt.Println(string(result))
 
-	var parse interface{}
+	var parse map[string]interface{}
 	json.Unmarshal([]byte(ss), &parse)
-	a := parse.(map[string]interface{})
-
-	fmt.Printf("官网输出类型：%T", a["age"])
+	//a := parse.(map[string]interface{})
+	//fmt.Printf("官网输出类型：%v,age type:%T,weight:", a, a["age"], a["weight"])
+	fmt.Printf("json输出类型：%v,age type:%T,weight:%T", parse, parse["age"], parse["weight"])
 
 }
 
@@ -101,25 +101,26 @@ func seriInterface() {
 	fmt.Println(ss)
 	var data sa
 	json.UnmarshalFromString(ss, &data)
-	fmt.Printf("%v,%T", data, data.age)
+	fmt.Printf("%v,age type:%T", data, data.age)
 
 }
 
-func gobTest() {
+func serieTest() {
 	s := map[string]interface{}{
 		"name":   "zhangsan",
 		"age":    23,
 		"weight": 99.45,
 	}
 
+	fmt.Println()
 	//encode
 	bytes, _ := serialize.Marshal(s)
 	ss := string(bytes)
-	fmt.Printf("%v,%T", ss, ss)
-	fmt.Println("===================")
+	//fmt.Printf("%v,%T", ss, ss)
+	fmt.Println()
 	//decode
 	decode, _ := serialize.UnMarshal([]byte(ss))
 	decodeMap := decode.(map[string]interface{})
-	fmt.Printf("%v,age type :%T", decodeMap, decodeMap["age"])
+	fmt.Printf("序列化输出类型：%v,age type :%T,weight:%T", decodeMap, decodeMap["age"], decodeMap["weight"])
 
 }

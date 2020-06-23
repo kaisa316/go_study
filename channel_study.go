@@ -29,11 +29,13 @@ func callGreet() {
 }
 
 func circle(c chan int) {
-	for i := 0; i < 10; i++ {
-		fmt.Println("i am circle")
+	for i := 0; i < 3; i++ {
+		fmt.Println("circle goroutine:i am circle ", i)
 		c <- i
 	}
+	fmt.Println("before close")
 	close(c)
+	fmt.Println("after close")
 }
 
 func callCircle() {
@@ -42,11 +44,12 @@ func callCircle() {
 	//block/unblock of main goroutine util channel close
 	for {
 		val, ok := <-c
+		fmt.Println("main here")
 		if ok == false {
 			fmt.Println(val, ok, "loop break")
 			break //exit break loop
 		} else {
-			fmt.Println(val, ok)
+			fmt.Println("main goroutine:", val, ok)
 		}
 	}
 	/*
@@ -218,11 +221,23 @@ func callWaitLearn() {
 	wg.Wait() //block here
 }
 
+func chanClose() {
+	c := make(chan int)
+	go chanCloseBranch(c)
+	c <- 3
+	close(c)
+	fmt.Println("end")
+}
+
+func chanCloseBranch(c chan int) {
+	i, _ := <-c
+	fmt.Println(i)
+	c <- 5
+	fmt.Println("kkk")
+}
+
 func main() {
-	//main 函数本身就是一个main goroutine,而且当main goroutine执行完毕后，整个程序就会退出，不管有没有其他要执行的goroutine,如果没有阻塞block，那么goroutine会一直执行下去，即使有其他ready状态的goroutines也不会被轮转，他们会被活活饿死。
-	//start main goroutine) {
-	//
-	//}
+	//routine,如果没有阻塞block，那么goroutine会一直执行下去，即使有其他ready状态的goroutines也不会被轮转，他们会被活活饿死。
 	fmt.Println("main start")
 	//callSayhi()
 	//callBuffersize()
@@ -232,7 +247,9 @@ func main() {
 	//callSender()
 	//callSenderUnclose()
 	//callCaculate()
-	callWaitLearn()
-	fmt.Println("main end")
+	//callWaitLearn()
+	//fmt.Println("main end")
+	callCircle()
+	//chanClose()
 
 }
